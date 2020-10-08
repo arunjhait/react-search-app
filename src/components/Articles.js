@@ -28,11 +28,13 @@ const Articles = ({ id, title, body, classes, onSave }) => {
 
   const [isEditing, setIsEditing] = useState(false);
   const [newTitle, setTitle] = useState('');
+  const [newBody, setBody] = useState('');
   const [error, setError] = useState('');
 
   const onEditClick = () => {
     setIsEditing(true); // Enable to edit mode
     setTitle(title); // Set the title
+    setBody(body);
   };
 
   const handleChange = (event) => {
@@ -42,12 +44,13 @@ const Articles = ({ id, title, body, classes, onSave }) => {
     if (!newTitle.trim()) {
       setError('Please enter a title.');
     } else {
-      if (newTitle !== title) {
-        onSave({ id, newTitle, body });
+      if (newTitle !== title || newBody !== body) {
+        onSave({ id, newTitle, newBody });
       }
       setIsEditing(false);
       setTitle(''); // On save remove the title from state
       setError(''); // On save remove the error message
+      setBody();
     }
   };
 
@@ -78,6 +81,20 @@ const Articles = ({ id, title, body, classes, onSave }) => {
           />
         }
       />
+
+      <CardContent>
+          <TextField
+          multiline
+          className={classes.editTitleInput}
+          rowsMax={8}
+          value={newBody}
+          onChange={e => setBody(e.target.value)}
+          inputProps={{
+            role: 'textbox',
+          }}
+        />
+        </CardContent>
+
     </div>
   ) : (
       <div className={classes.postTitleInner}>
@@ -95,6 +112,11 @@ const Articles = ({ id, title, body, classes, onSave }) => {
             </Typography>
           }
         />
+        <CardContent>
+          <Typography variant="body2" color="textSecondary" component="p">
+            {body}
+          </Typography>
+        </CardContent>
       </div>
     );
 
@@ -103,11 +125,6 @@ const Articles = ({ id, title, body, classes, onSave }) => {
     <Grid item xs={12} sm={4} role="listitem">
       <Card className={classes.root}>
         {titleContent}
-        <CardContent>
-          <Typography variant="body2" color="textSecondary" component="p">
-            {body}
-          </Typography>
-        </CardContent>
       </Card>
     </Grid>
   );

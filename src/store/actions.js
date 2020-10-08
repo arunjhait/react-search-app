@@ -1,4 +1,4 @@
-import { GET_ARTICLES, GET_ARTICLES_FAIL, LOADING, GET_ARTICLES_SUCCESS, UPDATE_ARTICLE } from "./actionTypes";
+import { GET_ARTICLES, GET_ARTICLES_FAIL, LOADING, GET_ARTICLES_SUCCESS, UPDATE_ARTICLE, SET_PAGINATION_FILTERS } from "./actionTypes";
 
 // GET_ARTICLES
 export const getArticles = () => ({
@@ -24,3 +24,17 @@ export const loading = () => ({
 export const updateArticle = (post) => {
   return { type: UPDATE_ARTICLE, payload: post };
 };
+
+// SET_PAGINATION_FILTERS
+export const setPaginationFilters = ({
+  pageNumber = 1,
+  itemsPerPage = 10,
+  total = 0,
+}) => ({
+  type: SET_PAGINATION_FILTERS,
+  payload: {
+    pageNumber,
+    itemsPerPage,
+    total,
+  },
+});

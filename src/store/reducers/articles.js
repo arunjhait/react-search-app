@@ -1,8 +1,13 @@
-import { GET_ARTICLES, GET_ARTICLES_SUCCESS, UPDATE_ARTICLE, GET_ARTICLES_FAIL } from "../actionTypes";
+import { GET_ARTICLES, GET_ARTICLES_SUCCESS, UPDATE_ARTICLE, GET_ARTICLES_FAIL, SET_PAGINATION_FILTERS } from "../actionTypes";
 
 const initialState = {
   loading: true,
-  articles: []
+  articles: [],
+  pagination: {
+    pageNumber: 1,
+    itemsPerPage: 10,
+    total: 0,
+  }
 };
 
 const articleReducers = (state = initialState, action) => {
@@ -21,10 +26,10 @@ const articleReducers = (state = initialState, action) => {
       };
     }
     case UPDATE_ARTICLE:
-      const { id, newTitle, body } = action.payload;
+      const { id, newTitle, newBody } = action.payload;
       const elementsIndex = state.articles.findIndex(element => Number(element.id) === Number(id));
       let updated_articles = [...state.articles];
-      updated_articles[elementsIndex] = { ...updated_articles[elementsIndex], title: newTitle, body: body };
+      updated_articles[elementsIndex] = { ...updated_articles[elementsIndex], title: newTitle, body: newBody };
       return {
         ...state,
         articles: updated_articles,
@@ -32,7 +37,13 @@ const articleReducers = (state = initialState, action) => {
       };
     case GET_ARTICLES_FAIL:
       return { error: true };
-
+    case SET_PAGINATION_FILTERS:
+      return {
+        ...state,
+        pagination: {
+          ...action.payload
+        }
+      };
     default:
       return state;
   }
