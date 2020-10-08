@@ -3,16 +3,18 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
-import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import EditIcon from '@material-ui/icons/Edit';
 import DoneIcon from '@material-ui/icons/Done';
 import Grid from '@material-ui/core/Grid';
+import CardActions from '@material-ui/core/CardActions';
+import Button from '@material-ui/core/Button';
 import { TextField } from '@material-ui/core';
 
 const useStyles = () => ({
   root: {
-    minHeight: 375
+    minHeight: 375,
+    position: 'relative'
   },
   headings: {
     fontWeight: '600',
@@ -21,6 +23,10 @@ const useStyles = () => ({
   },
   editTitleInput: {
     width: '100%'
+  },
+  buttonContainer: {
+    position: 'absolute',
+    bottom: 0
   }
 });
 
@@ -29,7 +35,7 @@ const Articles = ({ id, title, body, classes, onSave }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [newTitle, setTitle] = useState('');
   const [newBody, setBody] = useState('');
-  const [error, setError] = useState('');
+  const [error, setError] = useState({});
 
   const onEditClick = () => {
     setIsEditing(true); // Enable to edit mode
@@ -42,7 +48,10 @@ const Articles = ({ id, title, body, classes, onSave }) => {
   };
   const onSaveClick = () => {
     if (!newTitle.trim()) {
-      setError('Please enter a title.');
+      setError({ title: 'Please enter a title.' });
+    }
+    else if (!newBody.trim()) {
+      setError({ body: 'Please enter a description.' });
     } else {
       if (newTitle !== title || newBody !== body) {
         onSave({ id, newTitle, newBody });
@@ -50,21 +59,13 @@ const Articles = ({ id, title, body, classes, onSave }) => {
       setIsEditing(false);
       setTitle(''); // On save remove the title from state
       setError(''); // On save remove the error message
-      setBody();
+      setBody('');
     }
   };
 
   const titleContent = isEditing ? (
     <div className={classes.postTitleInner}>
       <CardHeader
-        action={
-          <IconButton aria-label="settings">
-            <DoneIcon
-              role="button"
-              onClick={onSaveClick}
-            />
-          </IconButton>
-        }
         title={
           <TextField
             className={classes.editTitleInput}
@@ -76,14 +77,14 @@ const Articles = ({ id, title, body, classes, onSave }) => {
             inputProps={{
               role: 'textbox',
             }}
-            error={error}
-            helperText={error && error}
+            error={error.title}
+            helperText={error && error.title}
           />
         }
       />
 
       <CardContent>
-          <TextField
+        <TextField
           multiline
           className={classes.editTitleInput}
           rowsMax={8}
@@ -92,20 +93,22 @@ const Articles = ({ id, title, body, classes, onSave }) => {
           inputProps={{
             role: 'textbox',
           }}
+          error={error.body}
+          helperText={error && error.body}
         />
-        </CardContent>
+      </CardContent>
+      <Grid container justify="center" className={classes.buttonContainer}>
+        <CardActions>
+          <Button size="small" onClick={onSaveClick}>
+            <DoneIcon />
+          </Button>
+        </CardActions>
+      </Grid>
 
     </div>
   ) : (
       <div className={classes.postTitleInner}>
         <CardHeader
-          action={
-            <IconButton aria-label="settings">
-              <EditIcon
-                onClick={onEditClick}
-              />
-            </IconButton>
-          }
           title={
             <Typography gutterBottom variant="h5" component="h2" className={classes.headings} >
               {title}
@@ -117,6 +120,13 @@ const Articles = ({ id, title, body, classes, onSave }) => {
             {body}
           </Typography>
         </CardContent>
+        <Grid container justify="center" className={classes.buttonContainer}>
+          <CardActions>
+            <Button size="small" onClick={onEditClick}>
+              <EditIcon />
+            </Button>
+          </CardActions>
+        </Grid>
       </div>
     );
 
