@@ -2,10 +2,10 @@
 
 You can easily search Article with title name and will be able to edit the title and discription on the same page. The autocomplete functionality is also there, so, when you search something it will auto-populate.
 
-Here is the screenshot of the  App:
+Here is the screenshots of the  App:
 <p align="center">
   <img src="./src/assets/images/Search-App.png" />
-  [Edit Field]<img src="./src/assets/images/Search-App-Edit.png" />
+  [Edit Field](<img src="./src/assets/images/Search-App-Edit.png" />)
 </p>
 
 ## Available Scripts
