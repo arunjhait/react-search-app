@@ -1,7 +1,7 @@
 
 import rootReducer, { articleReducers } from '../../../store/reducers/articles';
 import articles from '../../../config/mocks/articles';
-import { GET_ARTICLES, GET_ARTICLES_SUCCESS } from '../../../store/actionTypes';
+import { GET_ARTICLES, GET_ARTICLES_SUCCESS, UPDATE_ARTICLE } from '../../../store/actionTypes';
 
 describe('GET_ARTICLES Reducer', () => {
   test("should handle initial state", () => {
@@ -23,7 +23,7 @@ describe('GET_ARTICLES Reducer', () => {
   // test('should edit an article', () => {
   //   const title = 'None shall pass';
   //   const action = {
-  //     type: 'UPDATE_ARTICLE',
+  //     type: UPDATE_ARTICLE,
   //     id: articles[1].id,
   //     update: {
   //       title

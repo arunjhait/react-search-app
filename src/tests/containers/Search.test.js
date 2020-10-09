@@ -34,27 +34,4 @@ describe('<Search />', () => {
     );
     expect(search.container).toBeTruthy();
   });
-
-  it('should update pagination filters on page change', async () => {
-    const paginationComp = await waitFor(() => {
-      screen.findByTestId('pagination-comp');
-    });
-    
-    waitFor(() => {
-      expect(paginationComp).toBeTruthy();
-      fireEvent.change(paginationComp, {
-        page: 3
-      })
-    });
-      waitFor(() => expect(setPaginationFilters).toHaveBeenCalledTimes(1));
-    });
-
-    it("it should populate datalist correctly", async () => {
-      const autoComplete = await waitFor(() => {
-        screen.findByTestId('autocomplete-data-list');
-      });
-      waitFor(() => {
-        expect(autoComplete).toBeTruthy();
-      });
-    });
 });
