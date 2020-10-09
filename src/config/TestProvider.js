@@ -9,7 +9,9 @@ import theme from '../styles/theme';
 export default function TestProvider({ children }) {
   return (
     <ThemeProvider theme={theme}>
-      <Provider store={store}>{children}</Provider>
+      <Provider store={store}>
+        {children}
+      </Provider>
     </ThemeProvider>
   );
 }

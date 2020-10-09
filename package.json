@@ -24,18 +24,18 @@
     "react-router-dom": "5.2.0",
     "react-scripts": "3.4.3",
     "redux": "4.0.5",
-    "redux-mock-store": "1.5.4",
     "redux-logger": "3.0.6",
+    "redux-mock-store": "1.5.4",
     "redux-saga": "1.1.3"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "server": "node src/server/server.js",
-    "server:test": "mocha src/server/test/test-posts.js",
-    "test": "react-scripts test --env=jest-environment-jsdom-sixteen --watchAll --coverage --collectCoverageFrom=!src/serviceWorker.js --coverageDirectory=!src/server",
+    "server": "node server/server.js",
+    "server:test": "mocha server/test/test-posts.js",
+    "test": "react-scripts test --env=jest-environment-jsdom-sixteen --watchAll --coverage --collectCoverageFrom=!src/serviceWorker.js",
     "eject": "react-scripts eject",
-    "app:start": "concurrently --kill-others-on-fail \" yarn run server \" \"npm start\""
+    "start:dev": "concurrently --kill-others-on-fail \" yarn run server \" \"npm start\""
   },
   "eslintConfig": {
     "extends": "react-app"

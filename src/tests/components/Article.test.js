@@ -33,20 +33,6 @@ describe('<Articles />', () => {
     const title = await findByTestId('article-title');
 
     fireEvent.change(title, {
-      target: { value: '' },
-    });
-
-    // Error Message
-    fireEvent.change(body, {
-      target: { value: '' },
-    });
-
-    fireEvent.click(saveBtn);
-
-    const errorMsg = await screen.getByText('Please enter a title.');
-    expect(errorMsg).toBeInTheDocument();
-
-    fireEvent.change(title, {
       target: { value: val },
     });
 

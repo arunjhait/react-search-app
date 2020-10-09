@@ -9,9 +9,9 @@ import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import Pagination from '@material-ui/lab/Pagination';
 
-import { getArticles, updateArticle, setPaginationFilters } from '../../store/actions';
-import Articles from '../../components/Articles';
-import Skeletons from '../../components/Skeletons';
+import { getArticles, updateArticle, setPaginationFilters } from '../store/actions';
+import Articles from '../components/Articles';
+import Skeletons from '../components/Skeletons';
 
 const useStyles = (theme) => ({
   root: {
@@ -29,6 +29,9 @@ const useStyles = (theme) => ({
     [theme.breakpoints.down('xs')]: {
       width: '95%',
     },
+    '& svg': {
+      fill: theme.palette.secondary.main
+    }
   },
   autocomplete: {
     width: '100%'
@@ -44,6 +47,10 @@ const useStyles = (theme) => ({
     '& button.Mui-selected': {
       background: theme.palette.secondary.main,
     }
+  },
+  totalCount: {
+    color: theme.palette.secondary.main,
+    fontWeight: 600
   }
 });
 
@@ -58,12 +65,14 @@ const Search = (props) => {
   const { pageNumber, itemsPerPage, total } = pagination;
 
   useEffect(() => {
-    getArticles(); // Get the Artilces on intially page render
-  }, []);
+    if (articles && articles.length === 0) {
+      getArticles(); // Get the Artilces on intially page render
+    }
+  });
 
+  
 
   const getFilterResults = () => {
-    console.log('Arun jha total', total);
     const { articles, matching } = filterResults();
     if (articles && articles.length) {
       // create Article
@@ -76,21 +85,21 @@ const Search = (props) => {
     const pageStart = (pageNumber - 1) * itemsPerPage;
     const pageEnd = pageStart + itemsPerPage;
     if (!search) return { articles: articles && articles.slice(pageStart, pageEnd), matching: null };
-  
+
     const filteredPosts = articles && articles
-      .filter((p) => p.title.includes(search));
+      .filter((p) => p.title.toLowerCase().includes(search.toLowerCase()));
     return { articles: filteredPosts.length < pageStart ? filteredPosts : filteredPosts.slice(pageStart, pageEnd), matching: filteredPosts };
-  }; 
+  };
 
   const onSave = (article) => {
     props.updateArticle(article);
     setSearch('');
-    setUpdate(parseInt((Math.random()*10))%5); // To update the Autocomplete
+    setUpdate(parseInt((Math.random() * 10)) % 5); // To update the Autocomplete
   };
 
   /**
    * Get the value of Autocomplete and store in state to filter
-   * {@title}
+   * @ {string} title
   */
   const handleChange = (title) => {
     setSearch(title.inputProps.value);
@@ -114,7 +123,7 @@ const Search = (props) => {
       });
       // update pagination count
       if (paginator && paginator.count !== pages) {
-        paginator.count = pages > 1 ? Math.floor(pages) : 1;        
+        paginator.count = pages > 1 ? Math.floor(pages) : 1;
       }
       // update pagination page
       if (shouldResetPageNumber) {
@@ -131,9 +140,9 @@ const Search = (props) => {
 
   const totalCount = () => {
     let count = total;
-    if (count < 9) count = filterResults().articles.length;
+    if (filterResults().matching != null && !filterResults().matching.length) count = 0;
     return count;
-  }
+  };
 
   return (
     <Container>
@@ -144,32 +153,33 @@ const Search = (props) => {
             <div className={classes.root}>
               <Autocomplete
                 options={articles}
-                getOptionLabel={(articles) => articles.title || 'sun'}
+                getOptionLabel={(articles) => articles.title || update}
                 className={classes.autocomplete}
                 key={update}
-                renderInput={(params) => <TextField {...params} onChange={handleChange({ ...params })} label="Enter the Title to Get Result" variant="outlined" />}
+                freeSolo
+                renderInput={(params) => <TextField {...params} onChange={handleChange({ ...params })} label="Enter the Title to Get Result" variant="outlined" data-testid="autocomplete-data-list" />}
               />
             </div>
-            {total ? <p align="right">{`${totalCount()} Results`}</p> : ''}
+            {<p align="right" className={classes.totalCount}>{`${totalCount()} Results`}</p>}
             <Grid container justify="center" spacing={2}>
-            {getFilterResults() && getFilterResults()}
+              {getFilterResults() && getFilterResults()}
             </Grid>
             <div className={classes.pageContainer}>
-        <Pagination
-          innerRef={paginatorRef}
-          className={classes.pagination}
-          color="primary"
-          page={pageNumber}
-          align="center"
-          count={
-            total / itemsPerPage > 1
-              ? Math.floor(total / itemsPerPage)
-              : 1
-          }
-          onChange={handlePaginationChange}
-          data-testid="pagination-comp"
-        />
-        </div>
+              <Pagination
+                innerRef={paginatorRef}
+                className={classes.pagination}
+                color="primary"
+                page={pageNumber}
+                align="center"
+                count={
+                  total / itemsPerPage > 1
+                    ? Math.floor(total / itemsPerPage)
+                    : 1
+                }
+                onChange={handlePaginationChange}
+                data-testid="pagination-comp"
+              />
+            </div>
           </div>
         )}
     </Container>
