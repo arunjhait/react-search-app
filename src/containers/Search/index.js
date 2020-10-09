@@ -70,7 +70,7 @@ const Search = (props) => {
   const filterResults = () => {
     const pageStart = (pageNumber - 1) * itemsPerPage;
     const pageEnd = pageStart + itemsPerPage;
-    if (!search) return { articles: articles.slice(pageStart, pageEnd), matching: null };
+    if (!search) return { articles: articles && articles.slice(pageStart, pageEnd), matching: null };
   
     const filteredPosts = articles && articles
       .filter((p) => p.title.includes(search));
@@ -133,7 +133,7 @@ const Search = (props) => {
             <div className={classes.root}>
               <Autocomplete
                 options={articles}
-                getOptionLabel={(articles) => articles.title}
+                getOptionLabel={(articles) => articles.title || 'sun'}
                 className={classes.autocomplete}
                 key={update}
                 renderInput={(params) => <TextField {...params} onChange={handleChange({ ...params })} label="Enter the Title to Get Result" variant="outlined" />}
@@ -180,8 +180,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 
 Search.propTypes = {
   loading: PropTypes.bool,
-  articles: PropTypes.array.isRequired,
-  getArticles: PropTypes.func.isRequired
+  articles: PropTypes.array,
+  getArticles: PropTypes.func
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(useStyles)(Search));
