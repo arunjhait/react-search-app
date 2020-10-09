@@ -18,7 +18,7 @@ describe('fetchDataSaga', () => {
     expect(dispatchedActions).toEqual(
       [
         { type: GET_ARTICLES_SUCCESS, payload: JSON.parse(fetchPostsMockData)},
-        { type: LOADING },
+        // { type: LOADING },
       ],
     );
   });

@@ -4,13 +4,14 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import withStyles from '@material-ui/core/styles/withStyles';
 import TextField from '@material-ui/core/TextField';
-import Skeletons from '../../components/Skeletons';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import { getArticles, updateArticle, setPaginationFilters } from '../../store/actions';
-import Articles from '../../components/Articles';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import Pagination from '@material-ui/lab/Pagination';
+
+import { getArticles, updateArticle, setPaginationFilters } from '../../store/actions';
+import Articles from '../../components/Articles';
+import Skeletons from '../../components/Skeletons';
 
 const useStyles = (theme) => ({
   root: {
@@ -39,6 +40,11 @@ const useStyles = (theme) => ({
     justifyContent: 'center',
     margin: '0.5rem 0'
   },
+  pagination: {
+    '& button.Mui-selected': {
+      background: theme.palette.secondary.main,
+    }
+  }
 });
 
 const Search = (props) => {
@@ -143,11 +149,10 @@ const Search = (props) => {
             <Grid container justify="center" spacing={2}>
             {getFilterResults() && getFilterResults()}
             </Grid>
-          </div>
-        )}
-        <div className={classes.pageContainer}>
+            <div className={classes.pageContainer}>
         <Pagination
           innerRef={paginatorRef}
+          className={classes.pagination}
           color="primary"
           page={pageNumber}
           align="center"
@@ -160,6 +165,8 @@ const Search = (props) => {
           data-testid="pagination-comp"
         />
         </div>
+          </div>
+        )}
     </Container>
   );
 }

@@ -8,7 +8,7 @@ const styles = (theme) => ({
     alignItems: 'center',
     justifyContent: 'center',
     textAlign: 'center',
-    background: theme.palette.primary.main,
+    background: theme.palette.secondary.main,
   },
   headerText: {
     fontSize: 28,

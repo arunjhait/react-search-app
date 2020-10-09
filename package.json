@@ -34,7 +34,8 @@
     "server": "node src/server/server.js",
     "server:test": "mocha src/server/test/test-posts.js",
     "test": "react-scripts test --env=jest-environment-jsdom-sixteen --watchAll --coverage --collectCoverageFrom=!src/serviceWorker.js",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "app:start": "concurrently --kill-others-on-fail \" yarn run server \" \"npm start\""
   },
   "eslintConfig": {
     "extends": "react-app"

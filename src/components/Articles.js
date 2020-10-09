@@ -10,16 +10,26 @@ import Grid from '@material-ui/core/Grid';
 import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
 import { TextField } from '@material-ui/core';
+import CardMedia from '@material-ui/core/CardMedia';
 
-const useStyles = () => ({
+import banner from '../assets/images/article_image.jpeg';
+
+const useStyles = (theme) => ({
   root: {
     minHeight: 375,
     position: 'relative'
   },
   headings: {
     fontWeight: '600',
-    fontSize: '20px',
-    textTransform: 'capitalize'
+    fontSize: 20,
+    textTransform: 'capitalize',
+    height: 49,
+    maxHeight: 49,
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    display: '-webkit-box',
+    '-webkitBoxOrient': 'vertical',
+    '-webkitLineClamp': 2
   },
   editTitleInput: {
     width: '100%'
@@ -27,6 +37,13 @@ const useStyles = () => ({
   buttonContainer: {
     position: 'absolute',
     bottom: 0
+  },
+  media: {
+    width: '100%',
+    height: 100
+  },
+  button: {
+    fill: theme.palette.secondary.main
   }
 });
 
@@ -100,7 +117,7 @@ const Articles = ({ id, title, body, classes, onSave }) => {
       <Grid container justify="center" className={classes.buttonContainer}>
         <CardActions>
           <Button size="small" onClick={onSaveClick}>
-            <DoneIcon />
+            <DoneIcon className={classes.button} />
           </Button>
         </CardActions>
       </Grid>
@@ -115,6 +132,11 @@ const Articles = ({ id, title, body, classes, onSave }) => {
             </Typography>
           }
         />
+        <CardMedia
+        className={classes.media}
+        image={banner}
+        title="Search App Banner"
+      />
         <CardContent>
           <Typography variant="body2" color="textSecondary" component="p">
             {body}
@@ -123,7 +145,7 @@ const Articles = ({ id, title, body, classes, onSave }) => {
         <Grid container justify="center" className={classes.buttonContainer}>
           <CardActions>
             <Button size="small" onClick={onEditClick}>
-              <EditIcon />
+              <EditIcon className={classes.button} />
             </Button>
           </CardActions>
         </Grid>
