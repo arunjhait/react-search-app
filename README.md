@@ -5,7 +5,7 @@ You can easily search Article with title name and will be able to edit the title
 Here is the screenshot of the  App:
 <p align="center">
   <img src="./src/assets/images/Search-App.png" />
-  <img src="./src/assets/images/Search-App-Edit.png" />
+  [Edit Field]<img src="./src/assets/images/Search-App-Edit.png" />
 </p>
 
 ## Available Scripts
