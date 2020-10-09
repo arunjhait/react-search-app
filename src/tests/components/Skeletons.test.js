@@ -1,13 +1,13 @@
 import React from "react";
 import { render } from "@testing-library/react";
 
-import Header from "../../containers/Header";
+import Skeletons from "../../components/Skeletons";
 
-describe("Header component test suite", () => {  
+describe("Skeletons component test suite", () => {  
 
   it('it should render successfully', () => {
     const comp = render(
-        <Header />
+        <Skeletons />
     );
     expect(comp.container).toBeTruthy();
   });

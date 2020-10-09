@@ -1,13 +1,14 @@
 import React from "react";
 import { render } from "@testing-library/react";
 
-import Header from "../../containers/Header";
+import App from "../App";
+import MainRoutes from "../Routes/MainRoutes";
 
 describe("Header component test suite", () => {  
 
   it('it should render successfully', () => {
     const comp = render(
-        <Header />
+      <MainRoutes />
     );
     expect(comp.container).toBeTruthy();
   });

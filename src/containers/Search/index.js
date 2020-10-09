@@ -58,17 +58,16 @@ const Search = (props) => {
   const { pageNumber, itemsPerPage, total } = pagination;
 
   useEffect(() => {
-    if (articles && articles.length === 0) {
-      getArticles(); // Get the Artilces on intially page load
-    }
-  });
+    getArticles(); // Get the Artilces on intially page render
+  }, []);
 
 
   const getFilterResults = () => {
+    console.log('Arun jha total', total);
     const { articles, matching } = filterResults();
     if (articles && articles.length) {
       // create Article
-      maybeUpdatePagination(matching && matching.length);
+      updatePage(matching && matching.length);
       return articles.map((item) => <Articles onSave={onSave} key={item.id} {...item} />);
     }
   };
@@ -101,7 +100,7 @@ const Search = (props) => {
    * Decides if an update to pagination should happen
    * @ {number} matching
    */
-  const maybeUpdatePagination= (matching) => {
+  const updatePage = (matching) => {
     const totalP = matching || articles.length;
     const pages = totalP / itemsPerPage;
     const paginator = paginatorRef.current;
@@ -126,9 +125,15 @@ const Search = (props) => {
 
   const handlePaginationChange = (e, value) => {
     setPaginationFilters({ ...pagination, pageNumber: value });
-    // scroll to top when page changes
+    // Scroll top when page gets changed
     window.scrollTo(0, 0);
   };
+
+  const totalCount = () => {
+    let count = total;
+    if (count < 9) count = filterResults().articles.length;
+    return count;
+  }
 
   return (
     <Container>
@@ -145,7 +150,7 @@ const Search = (props) => {
                 renderInput={(params) => <TextField {...params} onChange={handleChange({ ...params })} label="Enter the Title to Get Result" variant="outlined" />}
               />
             </div>
-            {filterResults().length ? <p align="right">{`${filterResults().length} Results`}</p> : ''}
+            {total ? <p align="right">{`${totalCount()} Results`}</p> : ''}
             <Grid container justify="center" spacing={2}>
             {getFilterResults() && getFilterResults()}
             </Grid>

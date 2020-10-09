@@ -22,7 +22,7 @@
     "react-dom": "16.13.1",
     "react-redux": "7.2.1",
     "react-router-dom": "5.2.0",
-    "react-scripts": "3.4.0",
+    "react-scripts": "3.4.3",
     "redux": "4.0.5",
     "redux-mock-store": "1.5.4",
     "redux-logger": "3.0.6",
@@ -33,7 +33,7 @@
     "build": "react-scripts build",
     "server": "node src/server/server.js",
     "server:test": "mocha src/server/test/test-posts.js",
-    "test": "react-scripts test --env=jest-environment-jsdom-sixteen --watchAll --coverage --collectCoverageFrom=!src/serviceWorker.js",
+    "test": "react-scripts test --env=jest-environment-jsdom-sixteen --watchAll --coverage --collectCoverageFrom=!src/serviceWorker.js --coverageDirectory=!src/server",
     "eject": "react-scripts eject",
     "app:start": "concurrently --kill-others-on-fail \" yarn run server \" \"npm start\""
   },

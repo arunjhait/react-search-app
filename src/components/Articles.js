@@ -89,10 +89,11 @@ const Articles = ({ id, title, body, classes, onSave }) => {
             value={newTitle}
             onChange={(e) => handleChange(e)}
             classes={{
-              input: classes.editTitleInputRoot,
+              input: classes.editTitleInputRoot
             }}
             inputProps={{
               role: 'textbox',
+              'data-testid': 'article-title'
             }}
             error={error.title}
             helperText={error && error.title}
@@ -109,14 +110,16 @@ const Articles = ({ id, title, body, classes, onSave }) => {
           onChange={e => setBody(e.target.value)}
           inputProps={{
             role: 'textbox',
+            'data-testid': 'article-body'
           }}
           error={error.body}
           helperText={error && error.body}
+
         />
       </CardContent>
       <Grid container justify="center" className={classes.buttonContainer}>
         <CardActions>
-          <Button size="small" onClick={onSaveClick}>
+          <Button size="small" onClick={onSaveClick} data-testid="art-save-btn">
             <DoneIcon className={classes.button} />
           </Button>
         </CardActions>
@@ -144,7 +147,7 @@ const Articles = ({ id, title, body, classes, onSave }) => {
         </CardContent>
         <Grid container justify="center" className={classes.buttonContainer}>
           <CardActions>
-            <Button size="small" onClick={onEditClick}>
+            <Button size="small" onClick={onEditClick} data-testid="art-edit-btn">
               <EditIcon className={classes.button} />
             </Button>
           </CardActions>
@@ -154,7 +157,7 @@ const Articles = ({ id, title, body, classes, onSave }) => {
 
   return (
 
-    <Grid item xs={12} sm={4} role="listitem">
+    <Grid item xs={12} sm={6} md={4} role="listitem">
       <Card className={classes.root}>
         {titleContent}
       </Card>

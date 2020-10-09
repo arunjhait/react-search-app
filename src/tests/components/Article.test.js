@@ -1,16 +1,63 @@
 import React from 'react';
-import { render, fireEvent, waitForElement, screen } from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
 import Articles from '../../components/Articles';
-import Search from '../../containers/Search';
-import TestProvider from '../../config/TestProvider';
+import mainArticles from '../../config/mocks/mainArticles';
 
 describe('<Articles />', () => {
-  it('Renders successfully without error', () => {
-    const articles = render(
-      <TestProvider>
-        <Articles />
-      </TestProvider>
+  let mockFn, comp, onSave;
+
+  beforeEach(() => {
+    mockFn = jest.fn();
+    onSave = jest.fn();
+    comp = render(
+      <Articles {...mainArticles[0]} onSave={onSave} />
     );
-    expect(articles.container).toBeTruthy();
+  });
+  it("<Articles /> should render successfully", () => {
+    expect(comp.container).toBeTruthy();
+  });
+
+  it("Should appear the form", async () => {
+    
+    const { findByTestId } = comp;
+    const val = "test value";
+    const editBtn = await findByTestId('art-edit-btn');
+
+    fireEvent.click(editBtn);
+    
+    const saveBtn = await findByTestId('art-save-btn');
+
+    expect(saveBtn).toBeTruthy();
+   
+    const body = await findByTestId('article-body');
+    const title = await findByTestId('article-title');
+
+    fireEvent.change(title, {
+      target: { value: '' },
+    });
+
+    // Error Message
+    fireEvent.change(body, {
+      target: { value: '' },
+    });
+
+    fireEvent.click(saveBtn);
+
+    const errorMsg = await screen.getByText('Please enter a title.');
+    expect(errorMsg).toBeInTheDocument();
+
+    fireEvent.change(title, {
+      target: { value: val },
+    });
+
+    fireEvent.change(body, {
+      target: { value: val },
+    });
+
+    fireEvent.click(saveBtn);
+
+    const newEditBtn = await findByTestId('art-edit-btn');
+    expect(newEditBtn).toBeTruthy();
+    
   });
 });
