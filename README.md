@@ -12,21 +12,21 @@ Here is the screenshots of the  App:
 
 ## Available Scripts
 
-### `npm run start:dev`
-
-The Application will get started
-
 ### `npm i`
 
 Firstly You will have to install all the dependencies
 
+### `npm run start:dev`
+
+This command will concurrently start node server and react server
+
 ### `npm run server`
 
-Then You will have to start the backend server
+To start the node server
 
 ### `npm start`
 
-Then You will have to start the front end server
+Runs the react app in the development mode.\
 
 Open [http://localhost:3000](http://localhost:3000) to view the client app in the browser.
 
